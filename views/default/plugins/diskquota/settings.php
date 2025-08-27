@@ -18,9 +18,9 @@ echo elgg_view_field([
             '#label' => elgg_echo('diskquota:settings:global_disk_space'),
             '#help' => elgg_echo('diskquota:settings:global_disk_space:help'),
             'name' => 'params[global_disk_space]',
-            'value' => (int) $entity->global_disk_space ?: 100,
+            'value' => (int) $entity->global_disk_space ?: 0,
             'min' => 0,
-            'step' => 0.1,
+            'step' => 1,
         ],
     ],
 ]);

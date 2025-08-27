@@ -1,0 +1,31 @@
+{
+	"name": "rivervanrain/diskquota",
+	"type": "elgg-plugin",
+	"description": "Manage the amount of disk space used by Elgg app users",
+    "license": "GNU Public License version 2",
+	"keywords": ["files"],
+	"homepage": "https://wzm.me",
+	"authors": [
+		{
+		  "name": "Nikolai Shcherbin",
+		  "email": "support@wzm.me"
+		}
+	],
+	"autoload": {
+		"psr-4": {
+			"": "classes/"
+		}
+	},
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ],
+	"conflict": {
+		"elgg/elgg": "<4.3"
+	},
+	"support": {
+		"source": "https://github.com/RiverVanRain/diskquota"
+	}
+}
