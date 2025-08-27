@@ -11,7 +11,7 @@
 return [
     'plugin' => [
 		'name' => 'Disk quota',
-		'version' => '2.0.0',
+		'version' => '3.0.0',
 		'dependencies' => [
 			'file' => [
 				'position' => 'after',
@@ -31,18 +31,15 @@ return [
         ],
     ],
 
-	'hooks' => [
-		'register' => [
-			'menu:entity' => [
-				\wZm\Files\DiskQuota\Menus\Entity::class => [],
-			],
-		],
-	],
-	
 	'events' => [
 		'delete' => [
 			'object' => [
 				\wZm\Files\DiskQuota\Events\OnDeleteObject::class => [],
+			],
+		],
+		'register' => [
+			'menu:entity' => [
+				\wZm\Files\DiskQuota\Menus\Entity::class => [],
 			],
 		],
 	],

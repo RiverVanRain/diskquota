@@ -37,7 +37,7 @@ foreach ($fields as $field) {
 
 //Submit
 $submit = elgg_view('input/submit', [
-    'value' => elgg_echo('save'),
+    'text' => elgg_echo('save'),
     'class' => 'elgg-button elgg-button-submit',
 ]);
 

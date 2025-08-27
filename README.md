@@ -1,6 +1,6 @@
 Disk quota
 ===================
-![Elgg 4.3](https://img.shields.io/badge/Elgg-4.3-green.svg?style=flat-square)
+![Elgg 5.1](https://img.shields.io/badge/Elgg-5.1-purple.svg?style=flat-square)
 
 Manage the amount of disk space used by Elgg app users.
 

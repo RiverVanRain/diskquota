@@ -2,21 +2,17 @@
 
 namespace wZm\Files\DiskQuota\Menus;
 
-use Elgg\Hook;
-use ElggMenuItem;
-use ElggRiverItem;
-
 class Entity
 {
-    public function __invoke(\Elgg\Hook $hook)
+    public function __invoke(\Elgg\Event $event): ?\Elgg\Menu\MenuItems
     {
         if (!elgg_is_admin_logged_in()) {
             return null;
         }
 
-        $menu = $hook->getValue();
+        $menu = $event->getValue();
 
-        $entity = $hook->getEntityParam();
+        $entity = $event->getEntityParam();
         if (!$entity instanceof \ElggUser) {
             return null;
         }
