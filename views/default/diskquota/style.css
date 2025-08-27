@@ -1,0 +1,21 @@
+
+.diskquota-status {
+    font-size: 0.8rem;
+
+    .diskquota-outer {
+        padding: 0.25rem;
+
+        .diskquota-inner {
+            height: 0.25rem;
+        }
+    }
+}
+
+.diskquota-state {
+    &.diskquota-state-success {
+        background-color: $(state-success-font-color);
+    }
+    &.diskquota-state-danger {
+        background-color: $(state-danger-font-color);
+    }
+}
