@@ -48,28 +48,29 @@ class Quota
     protected function calculateCurrentUpload()
     {
         $total = 0;
+        $error = 0;
 
         if (sizeof($_FILES)) {
             foreach ($_FILES as $name => $values) {
                 foreach ($values as $key => $value) {
                     if (!is_array($value)) {
-                        if ($key == 'error') {
+                        if ($key === 'error') {
                             $error = $value;
                         }
 
-                        if ($error == 0 && $key == 'size') {
+                        if ($error === 0 && $key === 'size') {
                             $total += $value;
                         }
                     } else {
-                        if ($key == 'error') {
+                        if ($key === 'error') {
                             foreach ($value as $ke => $val) {
-                                if ($val == 0) {
+                                if ($val === 0) {
                                     $good_keys[] = $ke;
                                 }
                             }
                         }
 
-                        if ($key == 'size') {
+                        if ($key === 'size') {
                             foreach ($good_keys as $keee) {
                                 $total += $value[$keee];
                             }
@@ -100,7 +101,7 @@ class Quota
     public function validate(): bool
     {
         if (!$this->getCurrentUploadSize()) {
-            return false;
+            return true;
         }
 
         if (!$this->current_user) {
@@ -116,6 +117,15 @@ class Quota
     }
 
   /**
+   * Update disk space after uploading file
+   * @return int
+   */
+    public function add(int $size = 0): int
+    {
+        return $this->current_user->disk_used = $this->current_user->disk_used + $size;
+    }
+
+  /**
    * Update disk space when replacing an existing file
    * @return int
    */
@@ -124,16 +134,31 @@ class Quota
         return $this->current_user->disk_used = $this->current_user->disk_used - $size;
     }
 
+ /**
+   * Validate and update disk space after reestoring file
+   * @return bool
+   */
+    public function restore(int $size = 0): bool
+    {
+        if (!$this->current_user) {
+            return false;
+        }
+
+        if (($this->total_size_used + $size) > $this->max_allowed_space) {
+            return false;
+        }
+
+        $this->current_user->disk_used = $this->total_size_used + $size;
+        return true;
+    }
+
   /**
    * Update disk space after deletion file
    * @param ElggFile $entity
    */
     public function refresh(\ElggFile $entity)
     {
-        $space_used = (int) $entity->diskspace_used;
-        if ($space_used) {
-            $this->current_user->disk_used = $this->current_user->disk_used - $space_used;
-        }
+        return $this->current_user->disk_used = $this->current_user->disk_used - (int) $entity->diskspace_used;
     }
 
   /**

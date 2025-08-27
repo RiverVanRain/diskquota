@@ -20,4 +20,6 @@ $outer_wrapper = elgg_format_element('div', ['class' => 'diskquota-outer'], elgg
     $space
 ])  . $inner_wrapper);
 
-echo elgg_format_element('div', ['class' => 'diskquota-status'], $outer_wrapper);
+$body = elgg_format_element('div', ['class' => 'diskquota-status'], $outer_wrapper);
+
+echo elgg_view_module('info', elgg_echo('diskquota:user'), $body);

@@ -19,7 +19,7 @@ class Upload
         $tags = (string) $request->getParam('tags');
 
         $container_guid = $container_guid ?: elgg_get_logged_in_user_guid();
-		
+
         // check if upload attempted and failed
         $uploaded_file = elgg_get_uploaded_file('upload', false);
 
@@ -90,31 +90,23 @@ class Upload
             $file->diskspace_used = $disk_quota->getCurrentUploadSize();
 
             // remove old icons
-			$file->deleteIcon();
-			
-			// update icons
-			if ($file->getSimpleType() === 'image') {
-				$file->saveIconFromElggFile($file);
-			}
+            $file->deleteIcon();
+
+            // update icons
+            if ($file->getSimpleType() === 'image') {
+                $file->saveIconFromElggFile($file);
+            }
         }
 
-        $forward = (string) $file->getURL();
-
-        // handle results differently for new files and file updates
+        // handle results
         if ($new_file) {
-            $container = get_entity($container_guid);
-            if ($container instanceof \ElggGroup) {
-                $forward = elgg_generate_url('collection:object:file:group', ['guid' => (int) $container->guid]);
-            } else {
-                $forward = elgg_generate_url('collection:object:file:owner', ['username' => (string) $container->username]);
-            }
-
             elgg_create_river_item([
                 'action_type' => 'create',
                 'object_guid' => (int) $file->guid,
+                'target_guid' => (int) $file->container_guid,
             ]);
         }
 
-        return elgg_ok_response('', elgg_echo('file:saved'), $forward);
+        return elgg_ok_response('', elgg_echo('entity:edit:object:file:success'), (string) $file->getURL());
     }
 }

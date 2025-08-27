@@ -2,7 +2,9 @@
 
 namespace wZm\Files\DiskQuota\Events;
 
-class OnDeleteObject
+use Elgg\Exceptions\Http\InternalServerErrorException;
+
+class OnRestoreObject
 {
     public function __invoke(\Elgg\Event $event)
     {
@@ -20,7 +22,7 @@ class OnDeleteObject
             return;
         }
 
-        if (!$entity->diskspace_used || $entity->isDeleted()) {
+        if (!$entity->diskspace_used || !$entity->isDeleted()) {
             return;
         }
 
@@ -31,7 +33,9 @@ class OnDeleteObject
 
         $disk_quota = new \wZm\Files\DiskQuota\Service\Quota($user);
 
-        $disk_quota->refresh($entity);
+        if (!(bool) $disk_quota->restore($entity->getSize())) {
+            throw new InternalServerErrorException(elgg_echo('diskquota:limit'));
+        }
 
         return true;
     }

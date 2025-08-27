@@ -23,7 +23,7 @@
         }
     ],
 	"conflict": {
-		"elgg/elgg": "<5.1"
+		"elgg/elgg": "<6.2"
 	},
 	"support": {
 		"source": "https://github.com/RiverVanRain/diskquota"
