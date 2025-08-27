@@ -1,5 +1,5 @@
 Disk quota
-===================
+====================
 ![Elgg 3.3](https://img.shields.io/badge/Elgg-3.3-green.svg)
 
 Manage the amount of disk space used by Elgg app users.
